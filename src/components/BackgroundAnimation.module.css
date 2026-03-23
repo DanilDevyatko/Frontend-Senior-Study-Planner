@@ -1,0 +1,109 @@
+.background {
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+}
+
+.baseLayer {
+  background:
+    radial-gradient(
+      circle at 16% 18%,
+      rgba(37, 99, 235, 0.08),
+      transparent 32%
+    ),
+    radial-gradient(circle at 82% 14%, rgba(15, 23, 42, 0.05), transparent 30%),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.12),
+      rgba(245, 246, 248, 0.28)
+    );
+  inset: 0;
+  position: absolute;
+}
+
+.animationFrame {
+  height: min(68vh, 42rem);
+  isolation: isolate;
+  min-width: 22rem;
+  opacity: 0.58;
+  overflow: hidden;
+  position: absolute;
+  right: 50%;
+  transform: translate(50%, 0);
+  top: -2rem;
+  width: min(62vw, 48rem);
+  will-change: transform;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    rgba(0, 0, 0, 0.4) 10%,
+    #000 18%,
+    #000 82%,
+    rgba(0, 0, 0, 0.4) 90%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    rgba(0, 0, 0, 0.4) 10%,
+    #000 18%,
+    #000 82%,
+    rgba(0, 0, 0, 0.4) 90%,
+    transparent 100%
+  );
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.animationFrame::before,
+.animationFrame::after {
+  content: "";
+  inset-block: 8%;
+  position: absolute;
+  width: 18%;
+  z-index: 1;
+}
+
+.animationFrame::before {
+  background: linear-gradient(
+    90deg,
+    rgba(245, 246, 248, 0.98),
+    rgba(245, 246, 248, 0.72) 42%,
+    rgba(245, 246, 248, 0)
+  );
+  filter: blur(20px);
+  left: -3%;
+}
+
+.animationFrame::after {
+  background: linear-gradient(
+    270deg,
+    rgba(245, 246, 248, 0.98),
+    rgba(245, 246, 248, 0.72) 42%,
+    rgba(245, 246, 248, 0)
+  );
+  filter: blur(20px);
+  right: -3%;
+}
+
+.animation {
+  display: block;
+  height: 100%;
+  transform: translateZ(0);
+  width: 100%;
+}
+
+@media (max-width: 760px) {
+  .animationFrame {
+    height: min(44vh, 22rem);
+    left: 50%;
+    min-width: 16rem;
+    opacity: 0.28;
+    right: auto;
+    top: 5.5rem;
+    transform: translateX(-50%);
+    width: min(92vw, 28rem);
+  }
+}

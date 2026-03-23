@@ -1,0 +1,104 @@
+.player {
+  backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  bottom: 1rem;
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  gap: 0.7rem;
+  padding: 0.85rem 0.95rem;
+  position: fixed;
+  right: 1rem;
+  width: min(21rem, calc(100vw - 2rem));
+  z-index: 22;
+}
+
+.header {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.titleGroup {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.eyebrow {
+  color: var(--text-soft);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.title {
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.toggleButton {
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  color: var(--text);
+  display: inline-flex;
+  font-weight: 600;
+  justify-content: center;
+  min-height: 2.25rem;
+  min-width: 4.75rem;
+  padding: 0.4rem 0.8rem;
+}
+
+.toggleButton:disabled {
+  color: var(--text-soft);
+  cursor: not-allowed;
+}
+
+.controlRow {
+  align-items: center;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+}
+
+.volumeLabel {
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.slider {
+  accent-color: var(--accent);
+  width: 100%;
+}
+
+.volumeValue {
+  color: var(--text-soft);
+  font-size: 0.82rem;
+  min-width: 2.9rem;
+  text-align: right;
+}
+
+.status {
+  color: var(--text-soft);
+  font-size: 0.8rem;
+}
+
+.statusError {
+  color: var(--danger);
+}
+
+@media (max-width: 760px) {
+  .player {
+    bottom: 5.75rem;
+    left: 1rem;
+    right: 1rem;
+    width: auto;
+  }
+}
