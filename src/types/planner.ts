@@ -80,6 +80,11 @@ export interface Reflection {
   updatedAt: string
 }
 
+export interface TaskNote {
+  content: string
+  updatedAt: string
+}
+
 export interface TaskProgress {
   status: TaskStatus
   updatedAt: string
@@ -90,6 +95,7 @@ export interface PlannerSnapshot {
   storageVersion: number
   planStartDate: string
   taskProgressById: Record<string, TaskProgress>
+  taskNotesById: Record<string, TaskNote>
   reflectionsByWeekId: Record<string, Reflection>
   manualWeakTopicIds: string[]
   lastActiveDate?: string

@@ -3,6 +3,7 @@ import type {
   ProgressStats,
   ReviewRecommendation,
   StudyPlan,
+  TaskNote,
   StudyTask,
   StudyWeek,
   TaskProgress,
@@ -14,6 +15,7 @@ export interface ResolvedTask extends StudyTask {
   scheduledDate: string
   isOverdue: boolean
   progress: TaskProgress
+  note?: TaskNote
 }
 
 export interface ResolvedDay {
@@ -93,6 +95,7 @@ function buildResolvedWeeks(plan: StudyPlan, snapshot: PlannerSnapshot, today: s
             scheduledDate,
             isOverdue: compareDateStrings(scheduledDate, today) < 0 && progress.status !== 'done',
             progress,
+            note: snapshot.taskNotesById[task.id],
           } satisfies ResolvedTask,
         ]
       }),

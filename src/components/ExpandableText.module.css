@@ -1,0 +1,21 @@
+.wrapper {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.collapsed {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--line-clamp, 3);
+  display: -webkit-box;
+  overflow: hidden;
+}
+
+.toggle {
+  background: transparent;
+  border: 0;
+  color: var(--accent);
+  font-size: 0.84rem;
+  font-weight: 600;
+  justify-self: start;
+  padding: 0;
+}

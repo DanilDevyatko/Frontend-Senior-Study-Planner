@@ -22,6 +22,23 @@ describe('plannerReducer', () => {
     expect(blockedState.taskProgressById['week-1-task-1']?.completedAt).toBeUndefined()
   })
 
+  it('saves and clears task notes per task', () => {
+    const initialState = createEmptySnapshot('2026-01-05')
+    const withNote = plannerReducer(initialState, {
+      type: 'saveTaskNote',
+      payload: { taskId: 'week-1-task-3', content: 'Need one more pass on stale closure examples.' },
+    })
+
+    expect(withNote.taskNotesById['week-1-task-3']?.content).toContain('stale closure examples')
+
+    const clearedNote = plannerReducer(withNote, {
+      type: 'saveTaskNote',
+      payload: { taskId: 'week-1-task-3', content: '   ' },
+    })
+
+    expect(clearedNote.taskNotesById['week-1-task-3']).toBeUndefined()
+  })
+
   it('saves reflections, toggles weak topics, and resets cleanly', () => {
     const initialState = createEmptySnapshot('2026-01-05')
     const withReflection = plannerReducer(initialState, {
@@ -53,6 +70,7 @@ describe('plannerReducer', () => {
 
     expect(resetState.planStartDate).toBe('2026-03-23')
     expect(resetState.taskProgressById).toEqual({})
+    expect(resetState.taskNotesById).toEqual({})
     expect(resetState.reflectionsByWeekId).toEqual({})
     expect(resetState.manualWeakTopicIds).toEqual([])
   })

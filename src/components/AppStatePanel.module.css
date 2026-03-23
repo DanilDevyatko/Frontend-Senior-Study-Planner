@@ -1,0 +1,16 @@
+.shell {
+  align-items: center;
+  display: grid;
+  min-height: 100svh;
+  padding: 1.5rem;
+}
+
+.inner {
+  margin: 0 auto;
+  max-width: 30rem;
+  width: 100%;
+}
+
+.body {
+  color: var(--text-muted);
+}

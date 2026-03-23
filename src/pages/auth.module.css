@@ -1,0 +1,121 @@
+.page {
+  align-items: center;
+  display: grid;
+  gap: 1.5rem;
+  margin: 0 auto;
+  max-width: 32rem;
+  min-height: 100svh;
+  padding: 2rem 1rem;
+}
+
+.hero {
+  display: grid;
+  gap: 0.35rem;
+  text-align: center;
+}
+
+.eyebrow {
+  color: var(--text-soft);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.title {
+  color: var(--text);
+  font-size: clamp(1.9rem, 4vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.body {
+  color: var(--text-muted);
+}
+
+.card {
+  width: 100%;
+}
+
+.modeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.modeButton {
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-muted);
+  display: inline-flex;
+  font-weight: 600;
+  justify-content: center;
+  min-height: 2.35rem;
+  padding: 0.45rem 0.8rem;
+}
+
+.modeButtonActive {
+  background: var(--accent-soft);
+  border-color: transparent;
+  color: var(--accent);
+}
+
+.form,
+.field {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.field label {
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.input {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 0.8rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.primaryButton,
+.secondaryButton {
+  align-items: center;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  font-weight: 600;
+  justify-content: center;
+  min-height: 2.45rem;
+  padding: 0.45rem 0.85rem;
+}
+
+.primaryButton {
+  background: var(--accent);
+  border: 1px solid transparent;
+  color: #ffffff;
+}
+
+.secondaryButton {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+}
+
+.errorText {
+  color: var(--danger);
+  font-size: 0.88rem;
+}
+
+.infoText {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+}

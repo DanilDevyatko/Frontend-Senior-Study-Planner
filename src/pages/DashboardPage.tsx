@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+import { ExpandableText } from '../components/ExpandableText'
+import { TaskNoteEditor } from '../components/TaskNoteEditor'
 import { EmptyState, PageCard, ProgressBar, TaskStatusSelect, TonePill } from '../components/ui'
 import { StudyGuidanceCard } from '../components/StudyGuidanceCard'
 import { usePlanner } from '../features/planner/usePlanner'
@@ -69,14 +71,20 @@ export function DashboardPage() {
                   <p className={styles.detailText}>Your first scheduled study task is ready.</p>
                 </div>
               ) : null}
-                <div className={styles.taskItem}>
-                  <div className={styles.taskHeader}>
-                    <div>
-                      <strong>{todayTask.title}</strong>
-                      <p className={styles.detailText}>{todayTask.details}</p>
-                    </div>
-                    <TonePill
-                      tone={
+              <div className={styles.taskItem}>
+                <div className={styles.taskHeader}>
+                  <div className={styles.taskTextGroup}>
+                    <strong>{todayTask.title}</strong>
+                    <ExpandableText
+                      className={styles.detailText}
+                      text={todayTask.details}
+                      collapsedLines={3}
+                      expandLabel="Show full task"
+                      collapseLabel="Show less"
+                    />
+                  </div>
+                  <TonePill
+                    tone={
                       todayTask.status === 'done'
                         ? 'success'
                         : todayTask.status === 'blocked'
@@ -100,6 +108,12 @@ export function DashboardPage() {
                   id="dashboard-today-status"
                   value={todayTask.status}
                   onChange={(event) => actions.setTaskStatus(todayTask.id, event.target.value as TaskStatus)}
+                />
+                <TaskNoteEditor
+                  taskId={todayTask.id}
+                  initialValue={todayTask.note?.content ?? ''}
+                  updatedAt={todayTask.note?.updatedAt}
+                  onSave={actions.saveTaskNote}
                 />
               </div>
             </div>

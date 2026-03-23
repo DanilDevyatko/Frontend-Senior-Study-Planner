@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { ExpandableText } from '../components/ExpandableText'
+import { TaskNoteEditor } from '../components/TaskNoteEditor'
 import { EmptyState, PageCard, ProgressBar, TaskStatusSelect, TonePill } from '../components/ui'
 import { StudyGuidanceCard } from '../components/StudyGuidanceCard'
 import { usePlanner } from '../features/planner/usePlanner'
@@ -173,9 +175,9 @@ export function RoadmapPage() {
                   {week.tasks.map((task) => (
                     <div key={task.id} className={styles.taskItem}>
                       <div className={styles.taskHeader}>
-                        <div>
+                        <div className={styles.taskTextGroup}>
                           <strong>{task.title}</strong>
-                          <p className={styles.detailText}>{task.details}</p>
+                          <ExpandableText className={styles.detailText} text={task.details} />
                         </div>
                         <TonePill
                           tone={
@@ -266,9 +268,13 @@ export function RoadmapPage() {
                   {selectedWeek.tasks.map((task) => (
                     <div key={task.id} className={styles.taskItem}>
                       <div className={styles.taskHeader}>
-                        <div>
+                        <div className={styles.taskTextGroup}>
                           <strong>{task.title}</strong>
-                          <p className={styles.detailText}>{task.details}</p>
+                          <ExpandableText
+                            className={styles.detailText}
+                            text={task.details}
+                            collapsedLines={3}
+                          />
                         </div>
                         <TonePill
                           tone={
@@ -295,6 +301,12 @@ export function RoadmapPage() {
                         id={`${task.id}-status`}
                         value={task.status}
                         onChange={(event) => actions.setTaskStatus(task.id, event.target.value as TaskStatus)}
+                      />
+                      <TaskNoteEditor
+                        taskId={task.id}
+                        initialValue={task.note?.content ?? ''}
+                        updatedAt={task.note?.updatedAt}
+                        onSave={actions.saveTaskNote}
                       />
                     </div>
                   ))}

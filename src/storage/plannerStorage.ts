@@ -1,4 +1,11 @@
-import { createEmptyReflection, type PlannerSnapshot, type Reflection, type TaskProgress, type TaskStatus } from '../types/planner'
+import {
+  createEmptyReflection,
+  type PlannerSnapshot,
+  type Reflection,
+  type TaskNote,
+  type TaskProgress,
+  type TaskStatus,
+} from '../types/planner'
 import { getTodayDate } from '../utils/date'
 
 export const STORAGE_KEY = 'frontend-senior-study-planner/v1'
@@ -65,11 +72,38 @@ function sanitizeReflectionMap(input: unknown): Record<string, Reflection> {
   }, {})
 }
 
+function sanitizeTaskNoteMap(input: unknown): Record<string, TaskNote> {
+  if (!input || typeof input !== 'object') {
+    return {}
+  }
+
+  return Object.entries(input).reduce<Record<string, TaskNote>>((accumulator, [taskId, value]) => {
+    if (!value || typeof value !== 'object') {
+      return accumulator
+    }
+
+    const content = 'content' in value && typeof value.content === 'string' ? value.content.trim() : ''
+    const updatedAt = 'updatedAt' in value && typeof value.updatedAt === 'string' ? value.updatedAt : getTodayDate()
+
+    if (!content) {
+      return accumulator
+    }
+
+    accumulator[taskId] = {
+      content,
+      updatedAt,
+    }
+
+    return accumulator
+  }, {})
+}
+
 export function createEmptySnapshot(planStartDate = getTodayDate()): PlannerSnapshot {
   return {
     storageVersion: STORAGE_VERSION,
     planStartDate,
     taskProgressById: {},
+    taskNotesById: {},
     reflectionsByWeekId: {},
     manualWeakTopicIds: [],
     lastActiveDate: undefined,
@@ -89,6 +123,7 @@ export function migratePlannerSnapshot(input: unknown): PlannerSnapshot | null {
     storageVersion: STORAGE_VERSION,
     planStartDate,
     taskProgressById: sanitizeTaskProgressMap(candidate.taskProgressById),
+    taskNotesById: sanitizeTaskNoteMap(candidate.taskNotesById),
     reflectionsByWeekId: sanitizeReflectionMap(candidate.reflectionsByWeekId),
     manualWeakTopicIds: Array.isArray(candidate.manualWeakTopicIds)
       ? candidate.manualWeakTopicIds.filter((topicId): topicId is string => typeof topicId === 'string')

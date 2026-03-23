@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { ExpandableText } from '../components/ExpandableText'
 import { EmptyState, PageCard, ProgressBar, StatCard, TonePill } from '../components/ui'
 import { usePlanner } from '../features/planner/usePlanner'
 import { formatShortDate } from '../utils/date'
@@ -92,10 +93,12 @@ export function ReviewPage() {
                 {viewModel.overdueTasks.slice(0, 8).map((task) => (
                   <div key={task.id} className={styles.taskItem}>
                     <div className={styles.taskHeader}>
-                      <strong>{task.title}</strong>
+                      <div className={styles.taskTextGroup}>
+                        <strong>{task.title}</strong>
+                      </div>
                       <TonePill tone="warning">{formatShortDate(task.scheduledDate)}</TonePill>
                     </div>
-                    <p className={styles.detailText}>{task.details}</p>
+                    <ExpandableText className={styles.detailText} text={task.details} />
                   </div>
                 ))}
               </div>

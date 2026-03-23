@@ -23,6 +23,7 @@ describe('plannerStorage', () => {
     const snapshot = loadPlannerSnapshot()
     expect(snapshot.planStartDate).toBe('2026-03-23')
     expect(snapshot.taskProgressById).toEqual({})
+    expect(snapshot.taskNotesById).toEqual({})
   })
 
   it('saves and reloads a valid snapshot', () => {
@@ -33,6 +34,10 @@ describe('plannerStorage', () => {
       updatedAt: '2026-01-05',
       completedAt: '2026-01-05',
     }
+    snapshot.taskNotesById['week-1-task-1'] = {
+      content: 'Closures clicked after the main scope returns.',
+      updatedAt: '2026-01-06',
+    }
 
     savePlannerSnapshot(snapshot)
 
@@ -40,6 +45,7 @@ describe('plannerStorage', () => {
     expect(loaded.planStartDate).toBe('2026-01-05')
     expect(loaded.manualWeakTopicIds).toEqual(['typescript'])
     expect(loaded.taskProgressById['week-1-task-1']?.status).toBe('done')
+    expect(loaded.taskNotesById['week-1-task-1']?.content).toContain('Closures')
   })
 
   it('falls back safely when the stored payload is corrupted', () => {
@@ -57,6 +63,9 @@ describe('plannerStorage', () => {
       taskProgressById: {
         'week-1-task-2': { status: 'done', updatedAt: '2026-02-03' },
       },
+      taskNotesById: {
+        'week-1-task-2': { content: 'Need to revisit event loop ordering.', updatedAt: '2026-02-03' },
+      },
       reflectionsByWeekId: {
         'week-2': { learned: 'Promises', difficult: 'Queues', explainScore: 4, buildScore: 4, debugScore: 3 },
       },
@@ -64,6 +73,7 @@ describe('plannerStorage', () => {
     })
 
     expect(migrated?.taskProgressById['week-1-task-2']?.completedAt).toBe('2026-02-03')
+    expect(migrated?.taskNotesById['week-1-task-2']?.content).toContain('event loop ordering')
     expect(migrated?.reflectionsByWeekId['week-2']?.learned).toBe('Promises')
 
     savePlannerSnapshot(createEmptySnapshot('2026-02-01'))

@@ -117,6 +117,12 @@
   justify-content: space-between;
 }
 
+.taskTextGroup {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
 .detailText,
 .metaText,
 .roadmapSummaryMeta,
@@ -124,6 +130,7 @@
 .topicWeekList {
   color: var(--text-muted);
   font-size: 0.9rem;
+  overflow-wrap: anywhere;
 }
 
 .buttonRow,

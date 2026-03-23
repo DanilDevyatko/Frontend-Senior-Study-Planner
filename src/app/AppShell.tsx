@@ -14,9 +14,18 @@ const navigationItems = [
 
 export function AppShell() {
   const { pathname } = useLocation()
-  const { viewModel } = usePlanner()
+  const { viewModel, syncStatus } = usePlanner()
   const activeLabel =
     navigationItems.find((item) => pathname.startsWith(item.to))?.label ?? 'Dashboard'
+
+  const syncLabel =
+    syncStatus === 'saving'
+      ? 'Saving…'
+      : syncStatus === 'error'
+        ? 'Sync issue'
+        : syncStatus === 'booting'
+          ? 'Syncing…'
+          : 'Synced'
 
   return (
     <div className={styles.shellFrame}>
@@ -34,6 +43,7 @@ export function AppShell() {
               <span>{viewModel.progress.overallCompletionRate}% complete</span>
               <span>Week {viewModel.progress.currentWeekNumber}</span>
               <span>{viewModel.progress.streak}-day streak</span>
+              <span>{syncLabel}</span>
             </div>
           </div>
 

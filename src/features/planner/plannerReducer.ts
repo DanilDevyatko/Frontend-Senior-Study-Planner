@@ -6,6 +6,7 @@ export type PlannerAction =
   | { type: 'hydrateSnapshot'; payload: PlannerSnapshot }
   | { type: 'setPlanStartDate'; payload: string }
   | { type: 'setTaskStatus'; payload: { taskId: string; status: TaskStatus } }
+  | { type: 'saveTaskNote'; payload: { taskId: string; content: string } }
   | { type: 'saveReflection'; payload: Omit<Reflection, 'updatedAt'> }
   | { type: 'toggleWeakTopic'; payload: string }
   | { type: 'resetPlanner'; payload?: string }
@@ -45,6 +46,26 @@ export function plannerReducer(state: PlannerSnapshot, action: PlannerAction): P
                 : undefined,
           },
         },
+      })
+    }
+
+    case 'saveTaskNote': {
+      const today = getTodayDate()
+      const content = action.payload.content.trim()
+      const nextTaskNotesById = { ...state.taskNotesById }
+
+      if (content) {
+        nextTaskNotesById[action.payload.taskId] = {
+          content,
+          updatedAt: today,
+        }
+      } else {
+        delete nextTaskNotesById[action.payload.taskId]
+      }
+
+      return withTouchedDate({
+        ...state,
+        taskNotesById: nextTaskNotesById,
       })
     }
 
