@@ -1,0 +1,55 @@
+.section {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.heading {
+  color: var(--text);
+  font-size: 0.86rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.stepList,
+.pointList {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.stepItem,
+.pointList li {
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  padding: 0.7rem 0.8rem;
+}
+
+.stepItem {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.stepHeader {
+  align-items: baseline;
+  color: var(--text);
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+
+.stepHeader strong {
+  font-size: 0.9rem;
+}
+
+.stepHeader span {
+  color: var(--text-soft);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.stepItem p,
+.pointList li {
+  font-size: 0.9rem;
+  line-height: 1.45;
+}

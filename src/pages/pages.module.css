@@ -1,0 +1,355 @@
+.page {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.hero {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.heroEyebrow {
+  color: var(--text-soft);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.heroTitle {
+  color: var(--text);
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700;
+  line-height: 1.1;
+  max-width: 20ch;
+}
+
+.heroBody {
+  color: var(--text-muted);
+  max-width: 44rem;
+}
+
+.statGrid {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.dashboardLayout,
+.reviewGrid,
+.settingsGrid,
+.roadmapLayout {
+  display: grid;
+  gap: 1rem;
+}
+
+.dashboardLayout,
+.reviewGrid,
+.settingsGrid {
+  grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
+}
+
+.dashboardAside {
+  display: grid;
+  gap: 1rem;
+}
+
+.progressHeroTop {
+  align-items: flex-end;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.progressNumber {
+  color: var(--text);
+  font-size: clamp(2.2rem, 5vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.inlineStats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.inlineStats span,
+.compactStat {
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-muted);
+  padding: 0.35rem 0.65rem;
+}
+
+.overviewList,
+.taskList,
+.recommendationGrid,
+.goalList,
+.topicList {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.overviewItem,
+.taskItem,
+.recommendationItem,
+.notice,
+.deliverableBox,
+.checkpoint,
+.topicRow {
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.85rem 0.95rem;
+}
+
+.itemHeader,
+.taskHeader,
+.detailHeader,
+.weekSummary {
+  align-items: flex-start;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.detailText,
+.metaText,
+.roadmapSummaryMeta,
+.helperText,
+.topicWeekList {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.buttonRow,
+.topicActions,
+.weekFooter {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.linkButton,
+.ghostButton,
+.primaryButton,
+.closeButton {
+  align-items: center;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  font-weight: 600;
+  justify-content: center;
+  min-height: 2.35rem;
+  padding: 0.45rem 0.75rem;
+  width: fit-content;
+}
+
+.linkButton,
+.ghostButton,
+.closeButton {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+}
+
+.primaryButton {
+  background: var(--accent);
+  border: 1px solid transparent;
+  color: #ffffff;
+}
+
+.field,
+.scoreField,
+.formGrid {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.field label,
+.scoreField label {
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.input,
+.textarea {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 0.8rem;
+}
+
+.textarea {
+  min-height: 5.5rem;
+  resize: vertical;
+}
+
+.scoreGrid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.roadmapLayout {
+  grid-template-columns: minmax(0, 1fr) minmax(22rem, 0.88fr);
+  align-items: flex-start;
+}
+
+.roadmapList {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.roadmapDetails {
+  border-bottom: 1px solid var(--border);
+}
+
+.roadmapDetails:last-child {
+  border-bottom: 0;
+}
+
+.roadmapSummary {
+  cursor: pointer;
+  display: grid;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0.95rem 1rem;
+}
+
+.roadmapSummary::-webkit-details-marker {
+  display: none;
+}
+
+.roadmapSummaryTitle {
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.weekSummarySide {
+  align-items: flex-end;
+  display: grid;
+  gap: 0.35rem;
+  justify-items: end;
+}
+
+.weekPercent {
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.weekContent {
+  border-top: 1px solid var(--border);
+  display: grid;
+  gap: 0.85rem;
+  padding: 0.95rem 1rem 1rem;
+}
+
+.detailPanel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  gap: 0.75rem;
+  overflow: hidden;
+  position: sticky;
+  top: 1.25rem;
+}
+
+.detailHeader {
+  padding: 1rem 1rem 0;
+}
+
+.detailScroll {
+  display: grid;
+  gap: 0.85rem;
+  max-height: calc(100svh - 8rem);
+  overflow: auto;
+  padding: 0 1rem 1rem;
+}
+
+.goalItem {
+  color: var(--text-muted);
+  padding-left: 1rem;
+  position: relative;
+}
+
+.goalItem::before {
+  background: var(--accent);
+  border-radius: 999px;
+  content: '';
+  height: 0.38rem;
+  left: 0;
+  position: absolute;
+  top: 0.55rem;
+  width: 0.38rem;
+}
+
+.topicRow {
+  align-items: center;
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: minmax(10rem, 0.8fr) minmax(0, 1fr) auto;
+}
+
+.topicMain {
+  display: grid;
+  gap: 0.2rem;
+}
+
+@media (max-width: 1180px) {
+  .statGrid,
+  .dashboardLayout,
+  .reviewGrid,
+  .settingsGrid,
+  .roadmapLayout,
+  .topicRow {
+    grid-template-columns: 1fr;
+  }
+
+  .detailPanel {
+    position: static;
+  }
+
+  .detailScroll {
+    max-height: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .scoreGrid,
+  .statGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .progressHeroTop,
+  .weekSummary,
+  .detailHeader {
+    flex-direction: column;
+  }
+
+  .detailPanel {
+    bottom: 4.9rem;
+    left: 1rem;
+    max-height: calc(100svh - 6rem);
+    position: fixed;
+    right: 1rem;
+    top: 1rem;
+    z-index: 18;
+  }
+
+  .detailScroll {
+    max-height: calc(100svh - 10rem);
+  }
+}

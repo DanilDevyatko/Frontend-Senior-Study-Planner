@@ -1,0 +1,141 @@
+.shell {
+  margin: 0 auto;
+  max-width: var(--content-width);
+  min-height: 100svh;
+  padding: 1.25rem 1.25rem 5.5rem;
+}
+
+.header {
+  display: grid;
+  gap: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.headerRow {
+  align-items: flex-start;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.brand {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.eyebrow {
+  color: var(--text-soft);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.brandTitle {
+  color: var(--text);
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.summary {
+  align-items: center;
+  color: var(--text-muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.summary span {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.35rem 0.65rem;
+}
+
+.navigation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.navLink,
+.mobileNavLink {
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-muted);
+  display: inline-flex;
+  font-weight: 600;
+  justify-content: center;
+  min-height: 2.35rem;
+  padding: 0.45rem 0.85rem;
+}
+
+.navLink:hover,
+.mobileNavLink:hover {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.navLinkActive,
+.mobileNavLinkActive {
+  background: var(--accent-soft);
+  border-color: transparent;
+  color: var(--accent);
+}
+
+.currentWeek {
+  color: var(--text-soft);
+  font-size: 0.9rem;
+}
+
+.content {
+  min-width: 0;
+}
+
+.mobileNav {
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  bottom: 1rem;
+  display: none;
+  gap: 0.35rem;
+  left: 1rem;
+  padding: 0.45rem;
+  position: fixed;
+  right: 1rem;
+  z-index: 20;
+}
+
+@media (max-width: 760px) {
+  .shell {
+    padding: 1rem 1rem 5.5rem;
+  }
+
+  .headerRow {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .summary {
+    justify-content: flex-start;
+  }
+
+  .navigation {
+    display: none;
+  }
+
+  .mobileNav {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .mobileNavLink {
+    font-size: 0.78rem;
+    padding-inline: 0.2rem;
+    text-align: center;
+  }
+}
