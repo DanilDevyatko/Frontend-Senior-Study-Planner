@@ -291,6 +291,8 @@ export function AuthPage() {
           </div>
         </form>
       </PageCard>
+
+      <p className={styles.authorCredit}>Created by Danylo Deviatko</p>
     </div>
   )
 }

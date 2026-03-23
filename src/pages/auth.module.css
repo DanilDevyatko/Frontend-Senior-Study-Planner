@@ -119,3 +119,9 @@
   color: var(--text-muted);
   font-size: 0.88rem;
 }
+
+.authorCredit {
+  color: var(--text-soft);
+  font-size: 0.82rem;
+  text-align: center;
+}

@@ -103,6 +103,12 @@
   min-width: 0;
 }
 
+.footer {
+  color: var(--text-soft);
+  font-size: 0.82rem;
+  margin-top: 1.5rem;
+}
+
 .mobileNav {
   background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(12px);
@@ -139,6 +145,10 @@
   .mobileNav {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .footer {
+    margin-bottom: 0.75rem;
   }
 
   .mobileNavLink {

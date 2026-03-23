@@ -2,6 +2,8 @@
 
 A production-focused study planner for frontend engineers working through a 12-week roadmap toward Senior Frontend depth.
 
+Author: Danylo Deviatko
+
 ## Stack
 
 - React 19
@@ -115,3 +117,8 @@ The frontend only needs the public-safe Supabase anon key. Never put the `servic
 ## Where to modify the study plan later
 
 Update the seeded roadmap in [`src/data/seed/studyPlan.ts`](./src/data/seed/studyPlan.ts). That file contains the topic list, milestones, weekly goals, expected outcomes, tasks, deliverables, and checkpoint prompts.
+
+## Author
+
+- Created by Danylo Deviatko
+- Repository: https://github.com/DanilDevyatko/Frontend-Senior-Study-Planner

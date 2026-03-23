@@ -20,11 +20,11 @@ export function AppShell() {
 
   const syncLabel =
     syncStatus === 'saving'
-      ? 'Saving…'
+      ? 'Saving...'
       : syncStatus === 'error'
         ? 'Sync issue'
         : syncStatus === 'booting'
-          ? 'Syncing…'
+          ? 'Syncing...'
           : 'Synced'
 
   return (
@@ -67,6 +67,10 @@ export function AppShell() {
         <main className={styles.content}>
           <Outlet />
         </main>
+
+        <footer className={styles.footer}>
+          <span>Created by Danylo Deviatko</span>
+        </footer>
 
         <nav aria-label="Mobile primary" className={styles.mobileNav}>
           {navigationItems.map((item) => (

@@ -2,6 +2,12 @@
   "name": "frontend-senior-study-planner",
   "private": true,
   "version": "0.0.0",
+  "author": "Danylo Deviatko",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DanilDevyatko/Frontend-Senior-Study-Planner.git"
+  },
+  "homepage": "https://github.com/DanilDevyatko/Frontend-Senior-Study-Planner",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
