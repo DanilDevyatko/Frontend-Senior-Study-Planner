@@ -1,4 +1,5 @@
-# [Frontend Senior Study Planner](frontend-study-planner.vercel.app)
+# Frontend Senior Study Planner
+[Production](frontend-study-planner.vercel.app)
 
 A production-focused study planner for frontend engineers working through a 12-week roadmap toward Senior Frontend depth.
 
