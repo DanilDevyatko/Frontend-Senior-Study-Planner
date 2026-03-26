@@ -1,4 +1,5 @@
 import { ConfidenceScale, EmptyState, PageCard, ProgressBar, TonePill } from '../components/ui'
+import { WeakTopicToggleButton } from '../components/WeakTopicToggleButton'
 import { usePlanner } from '../features/planner/usePlanner'
 import styles from './pages.module.css'
 
@@ -75,13 +76,12 @@ export function TopicsPage() {
                         ? 'At risk'
                         : 'Steady'}
                   </TonePill>
-                  <button
+                  <WeakTopicToggleButton
                     className={styles.ghostButton}
-                    type="button"
+                    isWeak={topic.isManualWeak}
+                    topicName={topic.name}
                     onClick={() => actions.toggleWeakTopic(topic.topicId)}
-                  >
-                    {topic.isManualWeak ? 'Remove weak flag' : 'Mark weak'}
-                  </button>
+                  />
                 </div>
               </div>
             ))}

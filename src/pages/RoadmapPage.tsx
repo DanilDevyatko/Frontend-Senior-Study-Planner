@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, NavLink, useParams } from 'react-router-dom'
 import { ExpandableText } from '../components/ExpandableText'
 import { TaskNoteEditor } from '../components/TaskNoteEditor'
 import { EmptyState, PageCard, ProgressBar, TaskStatusSelect, TonePill } from '../components/ui'
 import { StudyGuidanceCard } from '../components/StudyGuidanceCard'
+import { WeakTopicToggleButton } from '../components/WeakTopicToggleButton'
 import { usePlanner } from '../features/planner/usePlanner'
 import { createEmptyReflection, type Reflection, type TaskStatus } from '../types/planner'
 import { formatLongDate, formatWeekRange } from '../utils/date'
@@ -135,82 +136,44 @@ export function RoadmapPage() {
         <p className={styles.heroEyebrow}>Roadmap</p>
         <h1 className={styles.heroTitle}>A clean 12-week view of the full journey.</h1>
         <p className={styles.heroBody}>
-          Expand any week to inspect tasks inline. Open a week only when you need the detailed
-          workspace for status changes and reflection.
+          Click any week to open the focused workspace for task updates, notes, and reflection.
         </p>
       </header>
 
       <section className={styles.roadmapLayout}>
         <div className={styles.roadmapList}>
           {viewModel.weeks.map((week) => (
-            <details
+            <NavLink
               key={week.id}
-              className={styles.roadmapDetails}
-              open={week.isCurrent || week.id === selectedWeek?.id || undefined}
+              className={({ isActive }) =>
+                `${styles.roadmapWeekLink} ${isActive ? styles.roadmapWeekLinkActive : ''}`.trim()
+              }
+              end
+              to={`/roadmap/${week.id}`}
             >
-              <summary className={styles.roadmapSummary}>
-                <div className={styles.weekSummary}>
-                  <div>
-                    <p className={styles.heroEyebrow}>Week {week.weekNumber}</p>
-                    <h2 className={styles.roadmapSummaryTitle}>{week.title}</h2>
-                    <p className={styles.roadmapSummaryMeta}>{week.focusArea}</p>
-                  </div>
-                  <div className={styles.weekSummarySide}>
-                    <span className={styles.weekPercent}>{week.completionRate}%</span>
-                    <TonePill tone={week.isComplete ? 'success' : week.isCurrent ? 'accent' : 'warning'}>
-                      {week.isComplete ? 'Done' : week.isCurrent ? 'In progress' : 'Not started'}
-                    </TonePill>
-                  </div>
+              <div className={styles.weekSummary}>
+                <div>
+                  <p className={styles.heroEyebrow}>Week {week.weekNumber}</p>
+                  <h2 className={styles.roadmapSummaryTitle}>{week.title}</h2>
+                  <p className={styles.roadmapSummaryMeta}>{week.focusArea}</p>
                 </div>
-              </summary>
-
-              <div className={styles.weekContent}>
+                <div className={styles.weekSummarySide}>
+                  <span className={styles.weekPercent}>{week.completionRate}%</span>
+                  <TonePill tone={week.isComplete ? 'success' : week.isCurrent ? 'accent' : 'warning'}>
+                    {week.isComplete ? 'Done' : week.isCurrent ? 'In progress' : 'Not started'}
+                  </TonePill>
+                </div>
+              </div>
+              <div className={styles.roadmapWeekMeta}>
                 <ProgressBar
                   label={formatWeekRange(week.startDate, week.endDate)}
                   value={week.completionRate}
                   subtitle={`${week.completedTasks} of ${week.totalTasks} tasks complete`}
                   tone={week.isComplete ? 'success' : week.isCurrent ? 'accent' : 'warning'}
                 />
-                <div className={styles.taskList}>
-                  {week.tasks.map((task) => (
-                    <div key={task.id} className={styles.taskItem}>
-                      <div className={styles.taskHeader}>
-                        <div className={styles.taskTextGroup}>
-                          <strong>{task.title}</strong>
-                          <ExpandableText className={styles.detailText} text={task.details} />
-                        </div>
-                        <TonePill
-                          tone={
-                            task.status === 'done'
-                              ? 'success'
-                              : task.status === 'blocked'
-                                ? 'danger'
-                                : task.status === 'in_progress'
-                                  ? 'accent'
-                                  : 'warning'
-                          }
-                        >
-                          {task.status === 'done'
-                            ? 'Done'
-                            : task.status === 'blocked'
-                              ? 'Blocked'
-                              : task.status === 'in_progress'
-                                ? 'In progress'
-                                : 'Not started'}
-                        </TonePill>
-                      </div>
-                      <p className={styles.metaText}>{formatLongDate(task.scheduledDate)}</p>
-                    </div>
-                  ))}
-                </div>
-                <div className={styles.weekFooter}>
-                  <span className={styles.metaText}>Deliverable: {week.deliverable.title}</span>
-                  <Link className={styles.linkButton} to={`/roadmap/${week.id}`}>
-                    Open details
-                  </Link>
-                </div>
+                <p className={styles.metaText}>Deliverable: {week.deliverable.title}</p>
               </div>
-            </details>
+            </NavLink>
           ))}
         </div>
 
@@ -237,13 +200,12 @@ export function RoadmapPage() {
                 compact
                 actions={
                   selectedTopic ? (
-                    <button
+                    <WeakTopicToggleButton
                       className={styles.ghostButton}
-                      type="button"
+                      isWeak={selectedTopic.isManualWeak}
+                      topicName={selectedTopic.name}
                       onClick={() => actions.toggleWeakTopic(selectedTopic.topicId)}
-                    >
-                      {selectedTopic.isManualWeak ? 'Remove weak flag' : 'Mark weak'}
-                    </button>
+                    />
                   ) : undefined
                 }
               >
@@ -328,7 +290,7 @@ export function RoadmapPage() {
           </aside>
         ) : (
           <PageCard title="Week details">
-            <EmptyState title="Select a week" description="Open any week to edit tasks and save a reflection." />
+            <EmptyState title="Select a week" description="Click a week to edit tasks and save a reflection." />
           </PageCard>
         )}
       </section>

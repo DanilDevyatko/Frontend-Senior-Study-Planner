@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom'
 import { ExpandableText } from '../components/ExpandableText'
 import { TaskNoteEditor } from '../components/TaskNoteEditor'
 import { EmptyState, PageCard, ProgressBar, TaskStatusSelect, TonePill } from '../components/ui'
-import { StudyGuidanceCard } from '../components/StudyGuidanceCard'
 import { usePlanner } from '../features/planner/usePlanner'
 import type { TaskStatus } from '../types/planner'
 import { formatLongDate, formatWeekRange } from '../utils/date'
@@ -11,8 +10,6 @@ import styles from './pages.module.css'
 export function DashboardPage() {
   const { viewModel, actions } = usePlanner()
   const todayTask = viewModel.todayTask
-  const masteringTopics = viewModel.topicHealth.filter((topic) => topic.status === 'mastering').length
-  const weakTopicPreview = viewModel.weakTopics.slice(0, 3)
 
   return (
     <div className={styles.page}>
@@ -20,8 +17,8 @@ export function DashboardPage() {
         <p className={styles.heroEyebrow}>Dashboard</p>
         <h1 className={styles.heroTitle}>See where you are, what to do next, and how well you are progressing.</h1>
         <p className={styles.heroBody}>
-          The dashboard keeps the next action and the most important signals visible without forcing
-          you to scan a dense wall of cards.
+          The dashboard keeps the next action and your essential progress visible without extra
+          noise.
         </p>
       </header>
 
@@ -61,111 +58,65 @@ export function DashboardPage() {
         </div>
       </PageCard>
 
-      <section className={styles.dashboardLayout}>
-        <PageCard title="Today's task">
-          {todayTask ? (
-            <div className={styles.taskList}>
-              {!viewModel.planStarted ? (
-                <div className={styles.notice}>
-                  <strong>Plan starts on {formatLongDate(todayTask.scheduledDate)}</strong>
-                  <p className={styles.detailText}>Your first scheduled study task is ready.</p>
-                </div>
-              ) : null}
-              <div className={styles.taskItem}>
-                <div className={styles.taskHeader}>
-                  <div className={styles.taskTextGroup}>
-                    <strong>{todayTask.title}</strong>
-                    <ExpandableText
-                      className={styles.detailText}
-                      text={todayTask.details}
-                      collapsedLines={3}
-                      expandLabel="Show full task"
-                      collapseLabel="Show less"
-                    />
-                  </div>
-                  <TonePill
-                    tone={
-                      todayTask.status === 'done'
-                        ? 'success'
-                        : todayTask.status === 'blocked'
-                          ? 'danger'
-                          : todayTask.status === 'in_progress'
-                            ? 'accent'
-                            : 'warning'
-                    }
-                  >
-                    {todayTask.status === 'done'
-                      ? 'Done'
-                      : todayTask.status === 'blocked'
-                        ? 'Blocked'
-                        : todayTask.status === 'in_progress'
-                          ? 'In progress'
-                          : 'Not started'}
-                  </TonePill>
-                </div>
-                <p className={styles.metaText}>{formatLongDate(todayTask.scheduledDate)}</p>
-                <TaskStatusSelect
-                  id="dashboard-today-status"
-                  value={todayTask.status}
-                  onChange={(event) => actions.setTaskStatus(todayTask.id, event.target.value as TaskStatus)}
-                />
-                <TaskNoteEditor
-                  taskId={todayTask.id}
-                  initialValue={todayTask.note?.content ?? ''}
-                  updatedAt={todayTask.note?.updatedAt}
-                  onSave={actions.saveTaskNote}
-                />
-              </div>
-            </div>
-          ) : (
-            <EmptyState title="No active task" description="There is no scheduled task for today." />
-          )}
-        </PageCard>
-
-        <div className={styles.dashboardAside}>
-          <PageCard title="Progress signals">
-            <div className={styles.overviewList}>
-              <div className={styles.overviewItem}>
-                <strong>Streak</strong>
-                <p className={styles.detailText}>{viewModel.progress.streak} consecutive study days</p>
-              </div>
-              <div className={styles.overviewItem}>
-                <strong>Topic mastery</strong>
-                <p className={styles.detailText}>{masteringTopics} topics in a strong place</p>
-              </div>
-              <div className={styles.overviewItem}>
-                <strong>Weak topics</strong>
-                {weakTopicPreview.length === 0 ? (
-                  <p className={styles.detailText}>No topics are currently flagged.</p>
-                ) : (
-                  <div className={styles.goalList}>
-                    {weakTopicPreview.map((topic) => (
-                      <p key={topic.topicId} className={styles.goalItem}>
-                        {topic.name}
-                      </p>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-          </PageCard>
-
-          <PageCard title="Next milestone">
-            {viewModel.nextMilestone ? (
+      <PageCard title="Today's task">
+        {todayTask ? (
+          <div className={styles.taskList}>
+            {!viewModel.planStarted ? (
               <div className={styles.notice}>
-                <strong>
-                  Week {viewModel.nextMilestone.weekNumber} - {viewModel.nextMilestone.milestone}
-                </strong>
-                <p className={styles.detailText}>{viewModel.nextMilestone.deliverable.title}</p>
+                <strong>Plan starts on {formatLongDate(todayTask.scheduledDate)}</strong>
+                <p className={styles.detailText}>Your first scheduled study task is ready.</p>
               </div>
-            ) : (
-              <EmptyState title="Milestones complete" description="All milestone weeks are complete." />
-            )}
-          </PageCard>
-
-          <StudyGuidanceCard title="Daily routine and senior habits" eyebrow="Study method" />
-        </div>
-      </section>
+            ) : null}
+            <div className={styles.taskItem}>
+              <div className={styles.taskHeader}>
+                <div className={styles.taskTextGroup}>
+                  <strong>{todayTask.title}</strong>
+                  <ExpandableText
+                    className={styles.detailText}
+                    text={todayTask.details}
+                    collapsedLines={3}
+                    expandLabel="Show full task"
+                    collapseLabel="Show less"
+                  />
+                </div>
+                <TonePill
+                  tone={
+                    todayTask.status === 'done'
+                      ? 'success'
+                      : todayTask.status === 'blocked'
+                        ? 'danger'
+                        : todayTask.status === 'in_progress'
+                          ? 'accent'
+                          : 'warning'
+                  }
+                >
+                  {todayTask.status === 'done'
+                    ? 'Done'
+                    : todayTask.status === 'blocked'
+                      ? 'Blocked'
+                      : todayTask.status === 'in_progress'
+                        ? 'In progress'
+                        : 'Not started'}
+                </TonePill>
+              </div>
+              <p className={styles.metaText}>{formatLongDate(todayTask.scheduledDate)}</p>
+              <TaskStatusSelect
+                id="dashboard-today-status"
+                value={todayTask.status}
+                onChange={(event) => actions.setTaskStatus(todayTask.id, event.target.value as TaskStatus)}
+              />
+              <TaskNoteEditor
+                taskId={todayTask.id}
+                initialValue={todayTask.note?.content ?? ''}
+                updatedAt={todayTask.note?.updatedAt}
+                onSave={actions.saveTaskNote}
+              />
+            </div>
+          </div>
+        ) : (
+          <EmptyState title="No active task" description="There is no scheduled task for today." />
+        )}
+      </PageCard>
     </div>
   )
 }

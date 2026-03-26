@@ -1,5 +1,6 @@
 import type { PropsWithChildren } from 'react'
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { App } from './App'
 import type { AuthStatus } from '../features/auth/authTypes'
@@ -107,16 +108,70 @@ describe('App', () => {
       screen.getByRole('heading', { level: 2, name: 'Final Production-Grade Project' }),
     ).toBeInTheDocument()
     expect(screen.getByText('Select a week')).toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'Open details' })).not.toBeInTheDocument()
   })
 
-  it('opens a week detail route inside the roadmap workspace', async () => {
-    window.history.pushState({}, '', '/roadmap/week-1')
+  it('keeps the dashboard focused on the core study surfaces', async () => {
+    window.history.pushState({}, '', '/dashboard')
 
     render(<App />)
+
+    expect(
+      await screen.findByRole('heading', {
+        level: 1,
+        name: 'See where you are, what to do next, and how well you are progressing.',
+      }),
+    ).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 2, name: 'Overall progress' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 2, name: "Today's task" })).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { level: 2, name: 'Progress signals' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('heading', { level: 2, name: 'Next milestone' })).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('heading', { level: 2, name: 'Daily routine and senior habits' }),
+    ).not.toBeInTheDocument()
+  })
+
+  it('opens a week detail route when a roadmap row is clicked', async () => {
+    const user = userEvent.setup()
+    window.history.pushState({}, '', '/roadmap')
+
+    render(<App />)
+
+    await screen.findByRole('heading', { level: 1, name: 'A clean 12-week view of the full journey.' })
+
+    const weekLink = screen.getByText('JavaScript Execution and Closures').closest('a')
+
+    expect(weekLink).not.toBeNull()
+
+    await user.click(weekLink!)
 
     expect(
       await screen.findByRole('heading', { level: 2, name: 'Week summary' }),
     ).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Save reflection' })).toBeInTheDocument()
+    expect(window.location.pathname).toBe('/roadmap/week-1')
+    expect(weekLink).toHaveAttribute('aria-current', 'page')
+    expect(screen.queryByRole('link', { name: 'Open details' })).not.toBeInTheDocument()
+  })
+
+  it('adds clear weak-topic tooltips on topics and roadmap detail actions', async () => {
+    window.history.pushState({}, '', '/topics')
+
+    const { unmount } = render(<App />)
+
+    const topicsWeakButton = await screen.findByTitle('Mark JavaScript as a weak topic for review')
+
+    expect(topicsWeakButton).toHaveTextContent('Mark weak')
+    expect(topicsWeakButton).toHaveAttribute('aria-label', 'Mark JavaScript as weak for review')
+
+    unmount()
+    window.history.pushState({}, '', '/roadmap/week-1')
+
+    render(<App />)
+
+    const roadmapWeakButton = await screen.findByTitle('Mark JavaScript as a weak topic for review')
+
+    expect(roadmapWeakButton).toHaveTextContent('Mark weak')
+    expect(roadmapWeakButton).toHaveAttribute('aria-label', 'Mark JavaScript as weak for review')
   })
 })
